@@ -1,0 +1,220 @@
+<?php
+require_once(dirname(dirname(__FILE__)) . '/TemplateEngineFactory/TemplateEngine.php');
+require_once('twig/lib/Twig/Autoloader.php');
+
+/**
+ * Class TemplateEngineTwig
+ *
+ * @author Stefan Wanzenried <stefan.wanzenried@gmail.com>
+ *
+ * ProcessWire 2.x
+ * Copyright (C) 2014 by Ryan Cramer
+ * Licensed under GNU/GPL v2, see LICENSE.TXT
+ *
+ * http://processwire.com
+ *
+ */
+
+class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableModule
+{
+
+    const TWIG_VERSION = '1.15.1';
+
+    const COMPILE_DIR = 'TemplateEngineTwig_compile/';
+
+    /**
+     * @var Twig_Environment
+     */
+    protected $twig;
+
+
+    /**
+     * Holds the variables to pass to Twig when rendering the template
+     * @var array
+     */
+    protected $variables = array();
+
+
+    /**
+     * @param string $filename
+     */
+    public function __construct($filename = '')
+    {
+        parent::__construct($filename);
+    }
+
+
+    /**
+     * Setup Twig
+     */
+    public function initEngine()
+    {
+        parent::initEngine();
+        Twig_Autoloader::register();
+        $loader = new Twig_Loader_Filesystem($this->getTemplatesPath());
+        $this->twig = new Twig_environment($loader, array(
+            'cache' => $this->config->paths->assets . 'cache/' . self::COMPILE_DIR,
+            'debug' => $this->config->debug,
+            'auto_reload' => $this->getConfig('auto_reload'),
+            'autoescape' => $this->getConfig('autoescape'),
+        ));
+        if ($this->getConfig('api_vars_available')) {
+            foreach (Wire::getFuel() as $name => $object) {
+                if ($name == $this->factory->api_var) continue;
+                $this->variables[$name] = $object;
+            }
+        }
+        $this->initTwig($this->twig);
+    }
+
+
+    /**
+     * @return array
+     */
+    public static function getDefaultConfig()
+    {
+        $config = parent::getDefaultConfig();
+        return array_merge($config, array(
+            'template_files_suffix' => 'html',
+            'api_vars_available' => 1,
+            'auto_reload' => 1,
+            'auto_escape' => 0,
+        ));
+    }
+
+
+    /**
+     * Set a key/value pair to the template
+     *
+     * @param $key
+     * @param $value
+     */
+    public function set($key, $value)
+    {
+        $this->variables[$key] = $value;
+    }
+
+
+    /**
+     * Render markup from template file
+     *
+     * @throws WireException
+     * @return mixed
+     */
+    public function render()
+    {
+        try {
+            $template = $this->twig->loadTemplate($this->getFilename());
+            return $template->render($this->variables);
+        } catch (Exception $e) {
+            throw new WireException($e->getMessage());
+        }
+    }
+
+
+    /**
+     * @param string $filename
+     */
+    public function setFilename($filename) {
+        $suffix = $this->getConfig('template_files_suffix');
+        if (preg_match("/\.{$suffix}$/", $filename)) {
+            $this->filename = $filename;
+        } else {
+            $this->filename = $filename .  '.' . $suffix;
+        }
+    }
+
+
+    /**
+     * Clear all variables passed
+     */
+    public function clearVariables() {
+        $this->variables = array();
+    }
+
+
+    /**
+     * Hookable method called after twig instance is created.
+     * Allows for customizing Twig, e.g. add extensions
+     *
+     * @param Twig_Environment $twig
+     */
+    protected function ___initTwig(Twig_Environment $twig) {}
+
+
+
+    /**
+     * Methods per interfaces Module, ConfigurableModule
+     *
+     */
+
+
+    /**
+     * @return array
+     */
+    public static function getModuleInfo()
+    {
+        return array(
+            'title' => 'Template Engine Twig',
+            'summary' => 'Twig templates for the TemplateEngineFactory',
+            'version' => 100,
+            'author' => 'Stefan Wanzenried',
+            'href' => '',
+            'singular' => false,
+            'autoload' => false,
+            'requires' => array('TemplateEngineFactory'),
+        );
+    }
+
+
+    /**
+     * Return an InputfieldWrapper of Inputfields used to configure the class
+     *
+     * @param array $data Array of config values indexed by field name
+     * @return InputfieldWrapper
+     *
+     */
+    public static function getModuleConfigInputfields(array $data)
+    {
+        /** @var Modules $modules */
+        $data = array_merge(self::getDefaultConfig(), $data);
+        $wrapper = parent::getModuleConfigInputfields($data);
+        $modules = wire('modules');
+
+        $f = $modules->get('InputfieldText');
+        $f->label = __('Template files suffix');
+        $f->description = __('File extension of twig templates.');
+        $f->name = 'template_files_suffix';
+        $f->value = $data['template_files_suffix'];
+        $f->required = 1;
+        $f->columnWidth = 50;
+        $wrapper->append($f);
+
+        /** @var InputfieldCheckbox $f */
+        $f = $modules->get('InputfieldCheckbox');
+        $f->label = __('Import ProcessWire API variables in Twig templates');
+        $f->description = __('All API variables (page, input, config etc.) are accessible in Twig, e.g. {{ page }} for $page');
+        $f->name = 'api_vars_available';
+        if ($data['api_vars_available']) $f->checked = 1;
+        $f->columnWidth = 50;
+        $wrapper->append($f);
+
+        $f = $modules->get('InputfieldCheckbox');
+        $f->label = __("Auto reload templates (recompile)");
+        $f->description = __('If enabled, templates are recompiled whenever the source code changes');
+        $f->name = 'auto_reload';
+        if ($data['auto_reload']) $f->checked = 1;
+        $f->columnWidth = 50;
+        $wrapper->append($f);
+
+        $f = $modules->get('InputfieldCheckbox');
+        $f->label = __("Auto escape variables");
+        $f->description = __("If enabled, templates will auto-escape variables. If you use ProcessWire's textformatter to escape variables, do not enable this feature.");
+        $f->name = 'auto_escape';
+        if ($data['auto_escape']) $f->checked = 1;
+        $f->columnWidth = 50;
+        $wrapper->append($f);
+
+        return $wrapper;
+    }
+}
