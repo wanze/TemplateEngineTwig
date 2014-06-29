@@ -56,7 +56,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
             'cache' => $this->config->paths->assets . 'cache/' . self::COMPILE_DIR,
             'debug' => $this->config->debug,
             'auto_reload' => $this->getConfig('auto_reload'),
-            'autoescape' => $this->getConfig('autoescape'),
+            'autoescape' => $this->getConfig('auto_escape'),
         ));
         if ($this->getConfig('api_vars_available')) {
             foreach (Wire::getFuel() as $name => $object) {
