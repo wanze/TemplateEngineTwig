@@ -29,7 +29,8 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * Holds the variables to pass to Twig when rendering the template
+     * Stores variables and values set with TemplateEngineTwig::set()
+     * They are passed to Twig when rendering the template
      * @var array
      */
     protected $variables = array();
@@ -42,6 +43,9 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
     {
         parent::__construct($filename);
     }
+
+
+    public function init() {}
 
 
     /**
