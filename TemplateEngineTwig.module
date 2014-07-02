@@ -14,7 +14,6 @@ require_once('twig/lib/Twig/Autoloader.php');
  * http://processwire.com
  *
  */
-
 class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableModule
 {
 
@@ -29,8 +28,8 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * Stores variables and values set with TemplateEngineTwig::set()
-     * They are passed to Twig when rendering the template
+     * Stores variables and values set with TemplateEngineTwig::set(). Passed to Twig when rendering the template.
+     *
      * @var array
      */
     protected $variables = array();
@@ -57,14 +56,14 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem($this->getTemplatesPath());
         $this->twig = new Twig_environment($loader, array(
-            'cache' => $this->config->paths->assets . 'cache/' . self::COMPILE_DIR,
-            'debug' => $this->config->debug,
+            'cache' => $this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR,
+            'debug' => $this->wire('config')->debug,
             'auto_reload' => $this->getConfig('auto_reload'),
             'autoescape' => $this->getConfig('auto_escape'),
         ));
         if ($this->getConfig('api_vars_available')) {
             foreach (Wire::getFuel() as $name => $object) {
-                if ($name == $this->factory->api_var) continue;
+                if ($name == $this->factory->get('api_var')) continue;
                 $this->variables[$name] = $object;
             }
         }
@@ -119,12 +118,13 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
     /**
      * @param string $filename
      */
-    public function setFilename($filename) {
+    public function setFilename($filename)
+    {
         $suffix = $this->getConfig('template_files_suffix');
         if (preg_match("/\.{$suffix}$/", $filename)) {
             $this->filename = $filename;
         } else {
-            $this->filename = $filename .  '.' . $suffix;
+            $this->filename = $filename . '.' . $suffix;
         }
     }
 
@@ -132,8 +132,19 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
     /**
      * Clear all variables passed
      */
-    public function clearVariables() {
+    public function clearVariables()
+    {
         $this->variables = array();
+    }
+
+
+    /**
+     * Clear cache when uninstalling
+     */
+    public function uninstall()
+    {
+        parent::uninstall();
+        wireRmdir($this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR, true);
     }
 
 
@@ -191,7 +202,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         $f->name = 'template_files_suffix';
         $f->value = $data['template_files_suffix'];
         $f->required = 1;
-        $f->columnWidth = 50;
         $wrapper->append($f);
 
         /** @var InputfieldCheckbox $f */
@@ -200,7 +210,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         $f->description = __('All API variables (page, input, config etc.) are accessible in Twig, e.g. {{ page }} for $page');
         $f->name = 'api_vars_available';
         if ($data['api_vars_available']) $f->checked = 1;
-        $f->columnWidth = 50;
         $wrapper->append($f);
 
         $f = $modules->get('InputfieldCheckbox');
@@ -208,7 +217,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         $f->description = __('If enabled, templates are recompiled whenever the source code changes');
         $f->name = 'auto_reload';
         if ($data['auto_reload']) $f->checked = 1;
-        $f->columnWidth = 50;
         $wrapper->append($f);
 
         $f = $modules->get('InputfieldCheckbox');
@@ -216,7 +224,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         $f->description = __("If enabled, templates will auto-escape variables. If you use ProcessWire's textformatter to escape variables, do not enable this feature.");
         $f->name = 'auto_escape';
         if ($data['auto_escape']) $f->checked = 1;
-        $f->columnWidth = 50;
         $wrapper->append($f);
 
         return $wrapper;
