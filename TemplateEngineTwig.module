@@ -44,9 +44,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
     }
 
 
-    public function init() {}
-
-
     /**
      * Setup Twig
      */
