@@ -3,9 +3,11 @@ require_once(dirname(dirname(__FILE__)) . '/TemplateEngineFactory/TemplateEngine
 require_once('twig/lib/Twig/Autoloader.php');
 
 /**
- * Class TemplateEngineTwig
+ * TemplateEngineTwig
  *
  * @author Stefan Wanzenried <stefan.wanzenried@gmail.com>
+ * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License, version 2
+ * @version 1.0.1
  *
  * ProcessWire 2.x
  * Copyright (C) 2014 by Ryan Cramer
@@ -49,7 +51,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
      */
     public function initEngine()
     {
-        parent::initEngine();
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem($this->getTemplatesPath());
         $this->twig = new Twig_environment($loader, array(
@@ -113,20 +114,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * @param string $filename
-     */
-    public function setFilename($filename)
-    {
-        $suffix = $this->getConfig('template_files_suffix');
-        if (preg_match("/\.{$suffix}$/", $filename)) {
-            $this->filename = $filename;
-        } else {
-            $this->filename = $filename . '.' . $suffix;
-        }
-    }
-
-
-    /**
      * Clear all variables passed
      */
     public function clearVariables()
@@ -169,9 +156,9 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         return array(
             'title' => 'Template Engine Twig',
             'summary' => 'Twig templates for the TemplateEngineFactory',
-            'version' => 100,
-            'author' => 'Stefan Wanzenried',
-            'href' => '',
+            'version' => 101,
+            'author' => 'Stefan Wanzenried (Wanze)',
+            'href' => 'https://processwire.com/talk/topic/6835-module-twig-for-the-templateenginefactory/',
             'singular' => false,
             'autoload' => false,
             'requires' => array('TemplateEngineFactory'),
@@ -192,14 +179,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         $data = array_merge(self::getDefaultConfig(), $data);
         $wrapper = parent::getModuleConfigInputfields($data);
         $modules = wire('modules');
-
-        $f = $modules->get('InputfieldText');
-        $f->label = __('Template files suffix');
-        $f->description = __('File extension of twig templates.');
-        $f->name = 'template_files_suffix';
-        $f->value = $data['template_files_suffix'];
-        $f->required = 1;
-        $wrapper->append($f);
 
         /** @var InputfieldCheckbox $f */
         $f = $modules->get('InputfieldCheckbox');
