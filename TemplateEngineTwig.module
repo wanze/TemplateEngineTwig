@@ -53,7 +53,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
     {
         Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem($this->getTemplatesPath());
-        $this->twig = new Twig_environment($loader, array(
+        $this->twig = new Twig_Environment($loader, array(
             'cache' => $this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR,
             'debug' => $this->wire('config')->debug,
             'auto_reload' => $this->getConfig('auto_reload'),
