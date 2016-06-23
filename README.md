@@ -11,7 +11,7 @@ This module requires TemplateEngineFactory: https://github.com/wanze/TemplateEng
 After installing, don't forget to enable Twig as engine in the TemplateEngineFactory module's settings.
 
 ## Configuration
-* **Path to templates** Path to folder where you want to store your Smarty template files.
+* **Path to templates** Path to folder where you want to store your Twig template files.
 * **Template files suffix** The suffix of the template files, default is *html*.
 * **Import ProcessWire API variables in Twig template** If checked, any API variable is accessible inside the Twig templates, for example *{{ page }}* refers to the current page.
 * **Auto reload templates (recompile)** If enabled, templates are recompiled whenever the source code changes.
