@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(dirname(__FILE__)) . '/TemplateEngineFactory/TemplateEngine.php');
 if (!class_exists('Twig_Autoloader')) {
-    require_once(__DIR__ . '/vendor/twig/twig/lib/Twig/Autoloader.php');
+    require_once(/*NoCompile*/__DIR__ . '/vendor/twig/twig/lib/Twig/Autoloader.php');
 }
 
 /**
@@ -9,7 +9,7 @@ if (!class_exists('Twig_Autoloader')) {
  *
  * @author Stefan Wanzenried <stefan.wanzenried@gmail.com>
  * @license http://www.gnu.org/licenses/gpl-2.0.txt GNU General Public License, version 2
- * @version 1.0.3
+ * @version 1.0.4
  */
 class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableModule
 {
@@ -152,7 +152,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         return array(
             'title' => 'Template Engine Twig',
             'summary' => 'Twig templates for the TemplateEngineFactory',
-            'version' => 103,
+            'version' => 104,
             'author' => 'Stefan Wanzenried (Wanze)',
             'href' => 'https://processwire.com/talk/topic/6835-module-twig-for-the-templateenginefactory/',
             'singular' => false,
