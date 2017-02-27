@@ -52,6 +52,11 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
             'auto_reload' => $this->getConfig('auto_reload'),
             'autoescape' => $this->getConfig('auto_escape'),
         ));
+
+        if ($this->wire('config')->debug) {
+            $this->twig->addExtension(new Twig_Extension_Debug());
+        }
+
         if ($this->getConfig('api_vars_available')) {
             foreach (Wire::getFuel() as $name => $object) {
                 if ($name == $this->factory->get('api_var')) continue;
