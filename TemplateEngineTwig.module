@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(dirname(__FILE__)) . '/TemplateEngineFactory/TemplateEngine.php');
 if (!class_exists('Twig_Autoloader')) {
-    require_once(__DIR__ . '/vendor/twig/twig/lib/Twig/Autoloader.php');
+    require_once(/*NoCompile*/__DIR__ . '/vendor/twig/twig/lib/Twig/Autoloader.php');
 }
 
 /**
