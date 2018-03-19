@@ -1,7 +1,7 @@
 <?php
 require_once(dirname(dirname(__FILE__)) . '/TemplateEngineFactory/TemplateEngine.php');
-if (!class_exists('Twig_Autoloader')) {
-    require_once(/*NoCompile*/__DIR__ . '/vendor/twig/twig/lib/Twig/Autoloader.php');
+if (!class_exists('Twig_Compiler')) {
+    require_once (/*NoCompile*/__DIR__ . '/vendor/autoload.php');
 }
 
 /**
@@ -44,7 +44,6 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
      */
     public function initEngine()
     {
-        Twig_Autoloader::register();
         $loader = new Twig_Loader_Filesystem($this->getTemplatesPath());
         $this->twig = new Twig_Environment($loader, array(
             'cache' => $this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR,
@@ -52,6 +51,11 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
             'auto_reload' => $this->getConfig('auto_reload'),
             'autoescape' => $this->getConfig('auto_escape'),
         ));
+
+        if ($this->wire('config')->debug) {
+            $this->twig->addExtension(new Twig_Extension_Debug());
+        }
+
         if ($this->getConfig('api_vars_available')) {
             foreach (Wire::getFuel() as $name => $object) {
                 if ($name == $this->factory->get('api_var')) continue;
