@@ -4,39 +4,94 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "9a1d68f68dd7f6bc7bd151a90f59eed4",
-    "content-hash": "48e6215d785fe701e8d2c27a461a61a2",
+    "content-hash": "05a844a3c99555374d5c2dc74158cc42",
     "packages": [
         {
-            "name": "twig/twig",
-            "version": "v1.24.0",
+            "name": "hari/pw-module",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/twigphp/Twig.git",
-                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8"
+                "url": "https://github.com/harikt/pwmoduleinstaller.git",
+                "reference": "72baf9e2a6c810f09ce67a9f2c1ce079e57bea43"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
-                "reference": "3e5aa30ebfbafd5951fb1b01e338e1800ce7e0e8",
+                "url": "https://api.github.com/repos/harikt/pwmoduleinstaller/zipball/72baf9e2a6c810f09ce67a9f2c1ce079e57bea43",
+                "reference": "72baf9e2a6c810f09ce67a9f2c1ce079e57bea43",
+                "shasum": ""
+            },
+            "type": "composer-installer",
+            "extra": {
+                "class": "PW\\Composer\\SystemInstaller"
+            },
+            "autoload": {
+                "psr-0": {
+                    "PW\\Composer\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-2-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul M. Jones",
+                    "email": "pmjones88@gmail.com",
+                    "homepage": "http://paul-m-jones.com"
+                },
+                {
+                    "name": "Hari KT",
+                    "email": "kthari85@gmail.com",
+                    "homepage": "http://harikt.com"
+                },
+                {
+                    "name": "Kyle Robinson Young",
+                    "email": "kyle@dontkry.com",
+                    "homepage": "https://github.com/shama"
+                }
+            ],
+            "description": "Installs processwire 3rd party modules to PW system \"site/modules\" directory.",
+            "keywords": [
+                "installer",
+                "module",
+                "processwire"
+            ],
+            "time": "2016-03-11T04:01:22+00:00"
+        },
+        {
+            "name": "twig/twig",
+            "version": "v1.35.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "9c24f2cd39dc1906b76879e099970b7e53724601"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9c24f2cd39dc1906b76879e099970b7e53724601",
+                "reference": "9c24f2cd39dc1906b76879e099970b7e53724601",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.2.7"
+                "php": ">=5.3.3"
             },
             "require-dev": {
+                "psr/container": "^1.0",
                 "symfony/debug": "~2.7",
-                "symfony/phpunit-bridge": "~2.7"
+                "symfony/phpunit-bridge": "~3.3@dev"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "1.24-dev"
+                    "dev-master": "1.35-dev"
                 }
             },
             "autoload": {
                 "psr-0": {
                     "Twig_": "lib/"
+                },
+                "psr-4": {
+                    "Twig\\": "src/"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -66,7 +121,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2016-01-25 21:22:18"
+            "time": "2018-03-03T16:21:29+00:00"
         }
     ],
     "packages-dev": [],
@@ -75,6 +130,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "php": ">=5.3.0"
+    },
     "platform-dev": []
 }

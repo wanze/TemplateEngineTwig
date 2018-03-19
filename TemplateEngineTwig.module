@@ -31,16 +31,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * @param string $filename
-     */
-    public function __construct($filename = '')
-    {
-        parent::__construct($filename);
-    }
-
-
-    /**
-     * Setup Twig
+     * @inheritdoc
      */
     public function initEngine()
     {
@@ -67,14 +58,14 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * @return array
+     * @inheritdoc
      */
     public static function getDefaultConfig()
     {
         $config = parent::getDefaultConfig();
 
         return array_merge($config, array(
-            'template_files_suffix' => 'html',
+            'template_files_suffix' => 'html.twig',
             'api_vars_available' => 1,
             'auto_reload' => 1,
             'auto_escape' => 0,
@@ -83,10 +74,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * Set a key/value pair to the template
-     *
-     * @param $key
-     * @param $value
+     * @inheritdoc
      */
     public function set($key, $value)
     {
@@ -95,10 +83,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * Render markup from template file
-     *
-     * @throws WireException
-     * @return mixed
+     * @inheritdoc
      */
     public function render()
     {
@@ -167,11 +152,7 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
-     * Return an InputfieldWrapper of Inputfields used to configure the class
-     *
-     * @param array $data Array of config values indexed by field name
-     * @return InputfieldWrapper
-     *
+     * @inheritdoc
      */
     public static function getModuleConfigInputfields(array $data)
     {

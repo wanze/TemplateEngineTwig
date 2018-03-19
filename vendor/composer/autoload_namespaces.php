@@ -7,4 +7,5 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Twig_' => array($vendorDir . '/twig/twig/lib'),
+    'PW\\Composer\\' => array($vendorDir . '/hari/pw-module/src'),
 );
