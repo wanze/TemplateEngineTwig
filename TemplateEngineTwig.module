@@ -39,8 +39,8 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
         $this->twig = new Twig_Environment($loader, array(
             'cache' => $this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR,
             'debug' => $this->wire('config')->debug,
-            'auto_reload' => $this->getConfig('auto_reload'),
-            'autoescape' => $this->getConfig('auto_escape'),
+            'auto_reload' => $this->getConfig('auto_reload') == 1,
+            'autoescape' => $this->getConfig('auto_escape') == 1,
         ));
 
         if ($this->wire('config')->debug) {
