@@ -58,6 +58,15 @@ class TemplateEngineTwig extends TemplateEngine implements Module, ConfigurableM
 
 
     /**
+     * @return \Twig_Environment|null
+     */
+    public function getEngine()
+    {
+        return $this->twig;
+    }
+
+
+    /**
      * @inheritdoc
      */
     public static function getDefaultConfig()
