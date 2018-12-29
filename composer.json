@@ -23,5 +23,10 @@
     },
     "require-dev": {
         "phpunit/phpunit": "^6"
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "TemplateEngineTwig\\Test\\": "tests/"
+        }
     }
 }
