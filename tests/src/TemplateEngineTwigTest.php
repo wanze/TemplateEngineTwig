@@ -8,6 +8,13 @@ use ProcessWire\ProcessWire;
 use TemplateEngineTwig\TemplateEngineTwig;
 use Twig_Error_Loader;
 
+/**
+ * Tests for the TemplateEngineTwig class.
+ *
+ * @coversDefaultClass \TemplateEngineTwig\TemplateEngineTwig
+ *
+ * @group TemplateEngineTwig
+ */
 class TemplateEngineTwigTest extends TestCase
 {
     /**
@@ -29,7 +36,7 @@ class TemplateEngineTwigTest extends TestCase
     /**
      * @dataProvider initializeTwigDataProvider
      */
-    public function test_twig_initialized_correctly(array $moduleConfig, $autoReload, $strictVars, $debug, $wireDebug)
+    public function testInitTwig_DifferentConfiguration_InitializedCorrectly(array $moduleConfig, $autoReload, $strictVars, $debug, $wireDebug)
     {
         $this->wire->wire('config')->debug = $wireDebug;
 
@@ -45,10 +52,11 @@ class TemplateEngineTwigTest extends TestCase
 
         $engine = $this->getTwigEngine($moduleConfig);
 
+        // Twig is only initialized when we actually render something.
         $engine->render('dummy');
     }
 
-    public function test_hook_initTwig()
+    public function testInitTwig_AddCustomFunctionToTwig_FunctionIsAvailableInTemplate()
     {
         $this->wire->addHookAfter('TemplateEngineTwig::initTwig',
             function (HookEvent $event) {
@@ -65,7 +73,10 @@ class TemplateEngineTwigTest extends TestCase
         $this->assertEquals("ProcessWire rocks!\n", $engine->render('test_custom_function'));
     }
 
-    public function test_missing_template_throws_exception()
+    /**
+     * @covers ::render
+     */
+    public function testRender_MissingTemplate_ThrowsException()
     {
         $engine = $this->getTwigEngine();
 
@@ -74,28 +85,43 @@ class TemplateEngineTwigTest extends TestCase
         $engine->render('this/template/does/not/exist');
     }
 
-    public function test_rendering_with_or_without_templates_suffix()
+    /**
+     * @covers ::render
+     */
+    public function testRender_TemplateWithOrWithoutSuffix_TemplatesFoundAndSameOutput()
     {
         $engine = $this->getTwigEngine();
 
-        $this->assertEquals($engine->render('dummy'), $engine->render('dummy.html.twig'));
+        $this->assertEquals("Dummy\n", $engine->render('dummy'));
+        $this->assertEquals("Dummy\n", $engine->render('dummy.html.twig'));
     }
 
-    public function test_rendering_api_variables_available()
+    /**
+     * @covers ::render
+     */
+    public function testRender_ApiVariablesEnabledOrDisabled_ApiVariablesAvailableInTemplate()
     {
         $engine = $this->getTwigEngine();
+        $engine2 = $this->getTwigEngine(['api_vars_available' => false]);
 
         $this->assertEquals("API variables available.", $engine->render('test_api_vars'));
+        $this->assertNotEquals("API variables available.", $engine2->render('test_api_vars'));
     }
 
-    public function test_rendering_template_in_subfolder()
+    /**
+     * @covers ::render
+     */
+    public function testRender_TemplateInSubfolder_TemplateFoundAndRenderedCorrectly()
     {
         $engine = $this->getTwigEngine();
 
         $this->assertEquals("Dummy in subfolder!\n", $engine->render('subfolder/dummy'));
     }
 
-    public function test_rendering_custom_template_files_suffix()
+    /**
+     * @covers ::render
+     */
+    public function testRender_CustomTemplateFilesSuffix_TemplateFoundAndRenderedCorrectly()
     {
         $engine = $this->getTwigEngine(['template_files_suffix' => 'processwire.twig']);
 
@@ -103,17 +129,20 @@ class TemplateEngineTwigTest extends TestCase
         $this->assertEquals("ProcessWire!\n", $engine->render('test_custom_suffix.processwire.twig'));
     }
 
-    public function test_rendering_data()
+    public function testRender_PassingDataToTemplate_DataAvailableInTemplateAndRenderedCorrectly()
     {
         $engine = $this->getTwigEngine();
 
-        $data = [
+        $series = [
             'Breaking Bad',
             'Sons of Anarchy',
             'Big Bang Theory',
         ];
 
-        $this->assertEquals(implode(',', $data) . "\n", $engine->render('test_data', ['data' => $data]));
+        // The series are rendered comma separated -> {{ series|join(',') }}.
+        $expected = sprintf("%s\n", implode(',', $series));
+
+        $this->assertEquals($expected, $engine->render('test_data', ['series' => $series]));
     }
 
     /**
@@ -183,6 +212,8 @@ class TemplateEngineTwigTest extends TestCase
 
     /**
      * Let $config->paths->site point to this directory.
+     *
+     * This allows to render test twig templates under /templates/views.
      */
     private function fakeSitePath()
     {
@@ -223,7 +254,7 @@ class TemplateEngineTwigTest extends TestCase
 
     private function bootstrapProcessWire()
     {
-        $rootPath = __DIR__ . '../../../../../';
+        $rootPath = __DIR__ . '../../../../../../';
         $config = ProcessWire::buildConfig($rootPath);
         $this->wire = new ProcessWire($config);
     }

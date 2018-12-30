@@ -26,7 +26,7 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "TemplateEngineTwig\\Test\\": "tests/"
+            "TemplateEngineTwig\\Test\\": "tests/src/"
         }
     }
 }
