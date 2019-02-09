@@ -1,13 +1,14 @@
 {
     "name": "wanze/template-engine-twig",
     "type": "pw-module",
-    "description": "ProcessWire module adding Twig templates to the TemplateEngineFactory",
+    "description": "ProcessWire module adding Twig to the TemplateEngineFactory",
     "keywords": [ "twig-engine", "twig", "processwire"],
     "homepage": "https://github.com/wanze/TemplateEngineTwig",
-    "license": "GPL-2.0",
+    "license": "MIT",
     "authors": [
         {
             "name": "Stefan Wanzenried",
+            "email": "stefan.wanzenried@gmail.com",
             "homepage": "https://github.com/wanze"
         },
         {

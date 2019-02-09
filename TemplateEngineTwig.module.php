@@ -4,11 +4,6 @@ namespace ProcessWire;
 
 use TemplateEngineTwig\TemplateEngineTwig as TwigEngine;
 
-if (!class_exists('Twig_Compiler')) {
-    require_once(/*NoCompile*/
-        __DIR__ . '/vendor/autoload.php');
-}
-
 /**
  * Adds Twig templates to the TemplateEngineFactory module.
  */
@@ -104,7 +99,7 @@ class TemplateEngineTwig extends WireData implements Module, ConfigurableModule
         $field = $modules->get('InputfieldSelect');
         $field->label = __('Debug');
         $field->name = 'debug';
-        $field->setOptions([
+        $field->addOptions([
             'config' => __('Inherit from ProcessWire'),
             0 => __('No'),
             1 => __('Yes'),

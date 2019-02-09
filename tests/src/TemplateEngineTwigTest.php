@@ -129,6 +129,9 @@ class TemplateEngineTwigTest extends TestCase
         $this->assertEquals("ProcessWire!\n", $engine->render('test_custom_suffix.processwire.twig'));
     }
 
+    /**
+     * @covers ::render
+     */
     public function testRender_PassingDataToTemplate_DataAvailableInTemplateAndRenderedCorrectly()
     {
         $engine = $this->getTwigEngine();
