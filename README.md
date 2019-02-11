@@ -1,7 +1,9 @@
 # TemplateEngineTwig
 
 [![Build Status](https://travis-ci.org/wanze/TemplateEngineTwig.svg?branch=next)](https://travis-ci.org/wanze/TemplateEngineTwig)
+[![StyleCI](https://github.styleci.io/repos/21304492/shield?branch=next)](https://github.styleci.io/repos/21304492)
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+[![ProcessWire 3](https://img.shields.io/badge/ProcessWire-3.x-orange.svg)](https://github.com/processwire/processwire)
 
 A ProcessWire module adding Twig to the [TemplateEngineFactory](https://github.com/wanze/TemplateEngineFactory).
 
@@ -22,6 +24,9 @@ composer require wanze/template-engine-twig:^2.0
 
 This will install the _TemplateEngineTwig_ and _TemplateEngineFactory_ modules in one step. Afterwards, don't forget 
 to enable Twig as engine in the _TemplateEngineFactory_ module's configuration.
+
+> ℹ️ This module includes test dependencies. If you are installing on production with `composer install`, make sure to
+pass the `--no-dev` flag to omit autoloading any unnecessary test dependencies!.
 
 ## Configuration
 
