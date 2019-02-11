@@ -50,7 +50,7 @@ class TemplateEngineTwig extends WireData implements Module, ConfigurableModule
         ];
     }
 
-    public function ready()
+    public function init()
     {
         /** @var \ProcessWire\TemplateEngineFactory $factory */
         $factory = $this->wire('modules')->get('TemplateEngineFactory');

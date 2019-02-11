@@ -2,9 +2,7 @@
 
 namespace TemplateEngineTwig\Test;
 
-use PHPUnit\Framework\TestCase;
 use ProcessWire\HookEvent;
-use ProcessWire\ProcessWire;
 use TemplateEngineTwig\TemplateEngineTwig;
 use Twig_Error_Loader;
 
@@ -15,32 +13,24 @@ use Twig_Error_Loader;
  *
  * @group TemplateEngineTwig
  */
-class TemplateEngineTwigTest extends TestCase
+class TemplateEngineTwigTest extends ProcessWireTestCaseBase
 {
-    /**
-     * @var \ProcessWire\ProcessWire
-     */
-    private $wire;
-
     protected function setUp()
     {
-        $this->bootstrapProcessWire();
-        $this->fakeSitePath();
-    }
+        parent::setUp();
 
-    protected function tearDown()
-    {
-        ProcessWire::removeInstance($this->wire);
+        $this->fakePath('site', 'site/modules/TemplateEngineTwig/tests/');
     }
 
     /**
+     * @test
      * @dataProvider initializeTwigDataProvider
      */
-    public function testInitTwig_DifferentConfiguration_InitializedCorrectly(array $moduleConfig, $autoReload, $strictVars, $debug, $wireDebug)
+    public function it_should_initialize_twig_correctly_depending_on_module_configuration(array $moduleConfig, $autoReload, $strictVars, $debug, $wireDebug)
     {
-        $this->wire->wire('config')->debug = $wireDebug;
+        $this->wire('config')->debug = $wireDebug;
 
-        $this->wire->addHookAfter('TemplateEngineTwig::initTwig',
+        $this->addHookAfter('TemplateEngineTwig::initTwig',
             function (HookEvent $event) use ($autoReload, $strictVars, $debug) {
                 /** @var \Twig_Environment $twig */
                 $twig = $event->arguments('twig');
@@ -56,9 +46,12 @@ class TemplateEngineTwigTest extends TestCase
         $engine->render('dummy');
     }
 
-    public function testInitTwig_AddCustomFunctionToTwig_FunctionIsAvailableInTemplate()
+    /**
+     * @test
+     */
+    public function it_should_be_possible_to_extend_twig()
     {
-        $this->wire->addHookAfter('TemplateEngineTwig::initTwig',
+        $this->addHookAfter('TemplateEngineTwig::initTwig',
             function (HookEvent $event) {
                 /** @var \Twig_Environment $twig */
                 $twig = $event->arguments('twig');
@@ -74,9 +67,10 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::render
      */
-    public function testRender_MissingTemplate_ThrowsException()
+    public function it_should_throw_an_exception_if_a_template_does_not_exist()
     {
         $engine = $this->getTwigEngine();
 
@@ -86,9 +80,10 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::render
      */
-    public function testRender_TemplateWithOrWithoutSuffix_TemplatesFoundAndSameOutput()
+    public function it_should_find_templates_with_or_without_suffix_and_render_the_same_output()
     {
         $engine = $this->getTwigEngine();
 
@@ -97,9 +92,10 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::render
      */
-    public function testRender_ApiVariablesEnabledOrDisabled_ApiVariablesAvailableInTemplate()
+    public function it_should_only_provide_the_api_variables_if_enabled_in_config()
     {
         $engine = $this->getTwigEngine();
         $engine2 = $this->getTwigEngine(['api_vars_available' => false]);
@@ -109,9 +105,10 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::render
      */
-    public function testRender_TemplateInSubfolder_TemplateFoundAndRenderedCorrectly()
+    public function it_should_find_and_render_a_template_in_a_subfolder()
     {
         $engine = $this->getTwigEngine();
 
@@ -119,9 +116,10 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::render
      */
-    public function testRender_CustomTemplateFilesSuffix_TemplateFoundAndRenderedCorrectly()
+    public function it_should_find_and_render_a_template_with_a_custom_suffix()
     {
         $engine = $this->getTwigEngine(['template_files_suffix' => 'processwire.twig']);
 
@@ -130,9 +128,10 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
+     * @test
      * @covers ::render
      */
-    public function testRender_PassingDataToTemplate_DataAvailableInTemplateAndRenderedCorrectly()
+    public function it_should_pass_data_to_the_template()
     {
         $engine = $this->getTwigEngine();
 
@@ -214,17 +213,6 @@ class TemplateEngineTwigTest extends TestCase
     }
 
     /**
-     * Let $config->paths->site point to this directory.
-     *
-     * This allows to render test twig templates under /templates/views.
-     */
-    private function fakeSitePath()
-    {
-        $paths = $this->wire->wire('config')->paths;
-        $paths->set('site', 'site/modules/TemplateEngineTwig/tests/');
-    }
-
-    /**
      * @param array $factoryConfig
      * @param array $moduleConfig
      *
@@ -235,7 +223,7 @@ class TemplateEngineTwigTest extends TestCase
         $factoryConfig = array_merge($this->getFactoryConfig(), $factoryConfig);
         $moduleConfig = array_merge($this->getModuleConfig(), $moduleConfig);
 
-        return new TemplateEngineTwig($factoryConfig, $moduleConfig);
+        return $this->wire(new TemplateEngineTwig($factoryConfig, $moduleConfig));
     }
 
     private function getModuleConfig()
@@ -252,13 +240,7 @@ class TemplateEngineTwigTest extends TestCase
 
     private function getFactoryConfig()
     {
-        return $this->wire->wire('modules')->get('TemplateEngineFactory')->getArray();
-    }
-
-    private function bootstrapProcessWire()
-    {
-        $rootPath = __DIR__ . '../../../../../../';
-        $config = ProcessWire::buildConfig($rootPath);
-        $this->wire = new ProcessWire($config);
+        return $this->wire('modules')->get('TemplateEngineFactory')
+            ->getArray();
     }
 }
