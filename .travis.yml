@@ -16,11 +16,15 @@ install:
     - cd ../..
     - ~/.config/composer/vendor/bin/wireshell new processwire --profile=blank --dbUser=root --dbPass= --dbName=processwire --timezone=Europe/Berlin --httpHosts=localhost --username=admin --userpass=s3cr3t --useremail=john.doe@foo.com
 
+    # Execute composer install in the ProcessWire root directory to install the TemplateEngineFactory module
+    - cd processwire
+    - composer install
+
     # Copy the cloned module to site/modules
-    - cd processwire/site/modules
+    - cd site/modules
     - cp -r $TRAVIS_BUILD_DIR .
 
-    # Install dev dependencies
+    # Install DEV dependencies
     - cd TemplateEngineTwig
     - composer install
 
