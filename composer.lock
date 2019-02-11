@@ -177,16 +177,16 @@
         },
         {
             "name": "twig/twig",
-            "version": "v2.6.0",
+            "version": "v2.6.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "a11dd39f5b6589e14f0ff3b36675d06047c589b1"
+                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/a11dd39f5b6589e14f0ff3b36675d06047c589b1",
-                "reference": "a11dd39f5b6589e14f0ff3b36675d06047c589b1",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
+                "reference": "7d7342c8a4059fefb9b8d07db0cc14007021f9b7",
                 "shasum": ""
             },
             "require": {
@@ -240,7 +240,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2018-12-16T10:36:48+00:00"
+            "time": "2019-01-14T15:00:48+00:00"
         },
         {
             "name": "wanze/template-engine-factory",
@@ -248,12 +248,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/wanze/TemplateEngineFactory.git",
-                "reference": "8369021577ad885c7dde301853d798d71ca8b977"
+                "reference": "909bb4c2c39c8cce65848ff4a5d3c275bcd4f4a6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wanze/TemplateEngineFactory/zipball/57e03bb447cf3fc14db089920f7fc76f5c549c48",
-                "reference": "8369021577ad885c7dde301853d798d71ca8b977",
+                "url": "https://api.github.com/repos/wanze/TemplateEngineFactory/zipball/909bb4c2c39c8cce65848ff4a5d3c275bcd4f4a6",
+                "reference": "909bb4c2c39c8cce65848ff4a5d3c275bcd4f4a6",
                 "shasum": ""
             },
             "require": {
@@ -266,7 +266,7 @@
             "type": "pw-module",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "GPL-2.0"
+                "MIT"
             ],
             "authors": [
                 {
@@ -275,16 +275,17 @@
                 },
                 {
                     "name": "Stefan Wanzenried",
+                    "email": "stefan.wanzenried@gmail.com",
                     "homepage": "https://github.com/wanze"
                 }
             ],
-            "description": "Provides ProcessWire integration for various template engines such as Twig or Smarty.",
+            "description": "Provides ProcessWire integration for various template engines such as Twig.",
             "homepage": "https://github.com/wanze/TemplateEngineFactory",
             "keywords": [
                 "processwire",
                 "template-engine"
             ],
-            "time": "2018-12-28T10:29:44+00:00"
+            "time": "2019-02-11T19:49:08+00:00"
         }
     ],
     "packages-dev": [
