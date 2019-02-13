@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a0de63e9a416f79477e25b20b580bd2a",
+    "content-hash": "97fb8a6c0e8ae2e1241178c2157affa3",
     "packages": [
         {
             "name": "hari/pw-module",
@@ -244,16 +244,16 @@
         },
         {
             "name": "wanze/template-engine-factory",
-            "version": "dev-next",
+            "version": "v2.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/wanze/TemplateEngineFactory.git",
-                "reference": "909bb4c2c39c8cce65848ff4a5d3c275bcd4f4a6"
+                "reference": "ccfcb9a75826c66fdba9cff84879d848debddd30"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/wanze/TemplateEngineFactory/zipball/909bb4c2c39c8cce65848ff4a5d3c275bcd4f4a6",
-                "reference": "909bb4c2c39c8cce65848ff4a5d3c275bcd4f4a6",
+                "url": "https://api.github.com/repos/wanze/TemplateEngineFactory/zipball/ccfcb9a75826c66fdba9cff84879d848debddd30",
+                "reference": "ccfcb9a75826c66fdba9cff84879d848debddd30",
                 "shasum": ""
             },
             "require": {
@@ -285,7 +285,7 @@
                 "processwire",
                 "template-engine"
             ],
-            "time": "2019-02-11T19:49:08+00:00"
+            "time": "2019-02-13T13:56:57+00:00"
         }
     ],
     "packages-dev": [
@@ -959,16 +959,16 @@
         },
         {
             "name": "phpunit/phpunit",
-            "version": "6.5.13",
+            "version": "6.5.14",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "0973426fb012359b2f18d3bd1e90ef1172839693"
+                "reference": "bac23fe7ff13dbdb461481f706f0e9fe746334b7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/0973426fb012359b2f18d3bd1e90ef1172839693",
-                "reference": "0973426fb012359b2f18d3bd1e90ef1172839693",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/bac23fe7ff13dbdb461481f706f0e9fe746334b7",
+                "reference": "bac23fe7ff13dbdb461481f706f0e9fe746334b7",
                 "shasum": ""
             },
             "require": {
@@ -1039,7 +1039,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2018-09-08T15:10:43+00:00"
+            "time": "2019-02-01T05:22:47+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1753,9 +1753,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "wanze/template-engine-factory": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
