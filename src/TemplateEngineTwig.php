@@ -3,6 +3,9 @@
 namespace TemplateEngineTwig;
 
 use TemplateEngineFactory\TemplateEngineBase;
+use Twig\Environment;
+use Twig\Extension\DebugExtension;
+use Twig\Loader\FilesystemLoader;
 
 /**
  * Provides the Twig template engine.
@@ -12,7 +15,7 @@ class TemplateEngineTwig extends TemplateEngineBase
     const COMPILE_DIR = 'TemplateEngineTwig_compile/';
 
     /**
-     * @var \Twig\Environment
+     * @var Environment
      */
     protected $twig;
 
@@ -30,7 +33,7 @@ class TemplateEngineTwig extends TemplateEngineBase
     /**
      * @throws \ProcessWire\WireException
      *
-     * @return \Twig\Environment
+     * @return Environment
      */
     protected function getTwig()
     {
@@ -44,13 +47,13 @@ class TemplateEngineTwig extends TemplateEngineBase
     /**
      * @throws \ProcessWire\WireException
      *
-     * @return \Twig\Environment
+     * @return Environment
      */
     protected function buildTwig()
     {
-        $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatesRootPath());
+        $loader = new FilesystemLoader($this->getTemplatesRootPath());
 
-        $this->twig = new \Twig\Environment($loader, [
+        $this->twig = new Environment($loader, [
             'cache' => $this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR,
             'debug' => $this->isDebug(),
             'auto_reload' => (bool) $this->moduleConfig['auto_reload'],
@@ -60,7 +63,7 @@ class TemplateEngineTwig extends TemplateEngineBase
 
         // Add the debug extension offering the "dump()" function for variables.
         if ($this->isDebug()) {
-            $this->twig->addExtension(new \Twig\Extension\DebugExtension());
+            $this->twig->addExtension(new DebugExtension());
         }
 
         $this->initTwig($this->twig);
@@ -74,9 +77,9 @@ class TemplateEngineTwig extends TemplateEngineBase
      * Use this method to customize the passed $twig instance,
      * e.g. adding functions and filters.
      *
-     * @param \Twig\Environment $twig
+     * @param Environment $twig
      */
-    protected function ___initTwig(\Twig\Environment $twig)
+    protected function ___initTwig(Environment $twig)
     {
     }
 

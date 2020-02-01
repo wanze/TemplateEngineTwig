@@ -4,6 +4,9 @@ namespace TemplateEngineTwig\Test;
 
 use ProcessWire\HookEvent;
 use TemplateEngineTwig\TemplateEngineTwig;
+use Twig\Environment;
+use Twig\Error\LoaderError;
+use Twig\TwigFunction;
 
 /**
  * Tests for the TemplateEngineTwig class.
@@ -31,7 +34,7 @@ class TemplateEngineTwigTest extends ProcessWireTestCaseBase
 
         $this->addHookAfter('TemplateEngineTwig::initTwig',
             function (HookEvent $event) use ($autoReload, $strictVars, $debug) {
-                /** @var \Twig_Environment $twig */
+                /** @var Environment $twig */
                 $twig = $event->arguments('twig');
 
                 $this->assertEquals($debug, $twig->isDebug());
@@ -52,10 +55,10 @@ class TemplateEngineTwigTest extends ProcessWireTestCaseBase
     {
         $this->addHookAfter('TemplateEngineTwig::initTwig',
             function (HookEvent $event) {
-                /** @var \Twig_Environment $twig */
+                /** @var Environment $twig */
                 $twig = $event->arguments('twig');
 
-                $twig->addFunction(new \Twig_Function('processwire', function () {
+                $twig->addFunction(new TwigFunction('processwire', function () {
                     return 'ProcessWire rocks!';
                 }));
             });
@@ -73,7 +76,7 @@ class TemplateEngineTwigTest extends ProcessWireTestCaseBase
     {
         $engine = $this->getTwigEngine();
 
-        $this->expectException(Twig_Error_Loader::class);
+        $this->expectException(LoaderError::class);
 
         $engine->render('this/template/does/not/exist');
     }
