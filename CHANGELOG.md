@@ -2,6 +2,14 @@
 
 ## [Unreleased]
 
+
+## [3.0.0] - 2019-02-01
+
+* Update Twig to version `3.x` - thanks @porl (see [#23](https://github.com/wanze/TemplateEngineTwig/pull/23))
+
+Twig 3 uses namespaced classes and requires PHP `^7.2.5`. Make sure to test your installation after updating,
+especially if you use hooks to customize Twig.
+
 ## [2.0.0] - 2018-02-13
 
 * Initial release of the new major `2.x` version 🐣
@@ -31,6 +39,7 @@ possible with Composer, no longer via ProcessWire modules directory.
 * Fix autoloader deprecation message - by @lesaff.
 * Make sure that some configuration settings are correctly passed as booleans to twig - by @nextgensparx
 
+[3.0.0]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v3.0.0
 [2.0.0]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v2.0.0
 [1.1.0]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v1.1.0
-[Unreleased]: https://github.com/wanze/TemplateEngineTwig/compare/v2.0.0...HEAD
+[Unreleased]: https://github.com/wanze/TemplateEngineTwig/compare/v3.0.0...HEAD

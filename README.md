@@ -11,7 +11,7 @@ A ProcessWire module adding Twig to the [TemplateEngineFactory](https://github.c
 
 * ProcessWire `3.0` or newer
 * TemplateEngineFactory `2.0` or newer
-* PHP `7.0` or newer
+* PHP >= `7.0` for version `2.x`, PHP >= `7.2.5` for version `3.x`
 * Composer
 
 > The `1.x` version of this module is available on the [1.x branch](https://github.com/wanze/TemplateEngineTwig/tree/1.x).
@@ -22,7 +22,7 @@ Use this version if you still use _TemplateEngineFactory_ `1.x`.
 Execute the following command in the root directory of your ProcessWire installation:
 
 ```
-composer require wanze/template-engine-twig:^2.0
+composer require wanze/template-engine-twig:^3.0
 ```
 
 This will install the _TemplateEngineTwig_ and _TemplateEngineFactory_ modules in one step. Afterwards, don't forget 
@@ -57,10 +57,10 @@ Here is an example how you can use the provided hook to attach a custom function
 
 ```php
 wire()->addHookAfter('TemplateEngineTwig::initTwig', function (HookEvent $event) {
-    /** @var \Twig_Environment $twig */
+    /** @var \Twig\Environment $twig */
     $twig = $event->arguments('twig');
 
-    $twig->addFunction(new \Twig_Function('processwire', function () {
+    $twig->addFunction(new \Twig\TwigFunction('processwire', function () {
         return 'ProcessWire rocks!';
     }));
 });
@@ -86,7 +86,7 @@ use the same hook as above to register the desired extensions.
 
 ```php
 wire()->addHookAfter('TemplateEngineTwig::initTwig', function (HookEvent $event) {
-    /** @var \Twig_Environment $twig */
+    /** @var \Twig\Environment $twig */
     $twig = $event->arguments('twig');
     
     // Register the extensions.

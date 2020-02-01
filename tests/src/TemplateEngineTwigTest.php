@@ -4,7 +4,6 @@ namespace TemplateEngineTwig\Test;
 
 use ProcessWire\HookEvent;
 use TemplateEngineTwig\TemplateEngineTwig;
-use Twig_Error_Loader;
 
 /**
  * Tests for the TemplateEngineTwig class.
