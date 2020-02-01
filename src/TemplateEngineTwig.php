@@ -12,7 +12,7 @@ class TemplateEngineTwig extends TemplateEngineBase
     const COMPILE_DIR = 'TemplateEngineTwig_compile/';
 
     /**
-     * @var \Twig_Environment
+     * @var \Twig\Environment
      */
     protected $twig;
 
@@ -30,7 +30,7 @@ class TemplateEngineTwig extends TemplateEngineBase
     /**
      * @throws \ProcessWire\WireException
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function getTwig()
     {
@@ -44,13 +44,13 @@ class TemplateEngineTwig extends TemplateEngineBase
     /**
      * @throws \ProcessWire\WireException
      *
-     * @return \Twig_Environment
+     * @return \Twig\Environment
      */
     protected function buildTwig()
     {
-        $loader = new \Twig_Loader_Filesystem($this->getTemplatesRootPath());
+        $loader = new \Twig\Loader\FilesystemLoader($this->getTemplatesRootPath());
 
-        $this->twig = new \Twig_Environment($loader, [
+        $this->twig = new \Twig\Environment($loader, [
             'cache' => $this->wire('config')->paths->assets . 'cache/' . self::COMPILE_DIR,
             'debug' => $this->isDebug(),
             'auto_reload' => (bool) $this->moduleConfig['auto_reload'],
@@ -60,7 +60,7 @@ class TemplateEngineTwig extends TemplateEngineBase
 
         // Add the debug extension offering the "dump()" function for variables.
         if ($this->isDebug()) {
-            $this->twig->addExtension(new \Twig_Extension_Debug());
+            $this->twig->addExtension(new \Twig\Extension\DebugExtension());
         }
 
         $this->initTwig($this->twig);
@@ -74,9 +74,9 @@ class TemplateEngineTwig extends TemplateEngineBase
      * Use this method to customize the passed $twig instance,
      * e.g. adding functions and filters.
      *
-     * @param \Twig_Environment $twig
+     * @param \Twig\Environment $twig
      */
-    protected function ___initTwig(\Twig_Environment $twig)
+    protected function ___initTwig(\Twig\Environment $twig)
     {
     }
 
