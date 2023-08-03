@@ -1,6 +1,9 @@
 {
     "name": "wanze/template-engine-twig",
-    "type": "pw-module",
+    "type": "processwire-module",
+    "extra": {
+        "installer-name": "TemplateEngineTwig"
+    },
     "description": "ProcessWire module adding Twig to the TemplateEngineFactory",
     "keywords": [ "twig-engine", "twig", "processwire"],
     "homepage": "https://github.com/wanze/TemplateEngineTwig",
@@ -18,7 +21,7 @@
     ],
     "require": {
         "php": ">=7.0",
-        "hari/pw-module": "~1.0",
+        "composer/installers": "~1.0",
         "twig/twig": "^3.0",
         "wanze/template-engine-factory": "^2.0"
     },
