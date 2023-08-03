@@ -3,6 +3,13 @@
 ## [Unreleased]
 
 
+## [3.0.1] - 2023-08-03
+
+### Fixed
+
+* Deprecation warnings for PHP 8.2 - thanks @hiboudev (see [#29](https://github.com/wanze/TemplateEngineTwig/pull/23))
+* Add support for Composer 2
+
 ## [3.0.0] - 2019-02-01
 
 * Update Twig to version `3.x` - thanks @porl (see [#23](https://github.com/wanze/TemplateEngineTwig/pull/23))
@@ -39,6 +46,7 @@ possible with Composer, no longer via ProcessWire modules directory.
 * Fix autoloader deprecation message - by @lesaff.
 * Make sure that some configuration settings are correctly passed as booleans to twig - by @nextgensparx
 
+[3.0.1]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v3.0.1
 [3.0.0]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v3.0.0
 [2.0.0]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v2.0.0
 [1.1.0]: https://github.com/wanze/TemplateEngineTwig/releases/tag/v1.1.0

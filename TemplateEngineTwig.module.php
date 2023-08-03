@@ -37,7 +37,7 @@ class TemplateEngineTwig extends WireData implements Module, ConfigurableModule
         return [
             'title' => 'Template Engine Twig',
             'summary' => 'Twig templates for the TemplateEngineFactory',
-            'version' => 300,
+            'version' => 301,
             'author' => 'Stefan Wanzenried',
             'href' => 'https://processwire.com/talk/topic/6835-module-twig-for-the-templateenginefactory/',
             'singular' => true,
